@@ -65,7 +65,7 @@ public:
 
 	void update()
 	{
-		std::cout << this->speedValue << std::endl;
+		//*std::cout << this->speedValue << std::endl;
 	}
 private:
 		sf::RectangleShape player;
