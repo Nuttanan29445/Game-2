@@ -4,7 +4,7 @@
 #include <sstream>
 #include <SFML/Audio.hpp>
 #include "Menu.h"
-#include "Collision.h"
+#include "Platform.h"
 int page_number;
 
 int main()
@@ -64,7 +64,11 @@ int main()
     
 
     if (page_number == 0)
+
     {
+        Platform platform1(nullptr, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(500.0f, 300.0f));
+        Platform platform2(nullptr, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(500.0f, 300.0f)); 
+
         sf::Vector2i screenDimensions(910, 650);
         sf::RenderWindow window;
         window.create(sf::VideoMode(screenDimensions.x, screenDimensions.y), "SFML works!");
@@ -163,11 +167,11 @@ int main()
 
         sf::Texture enemyTexture;
         sf::Clock cdEnemy;
-        sf::CircleShape enemy[100];
+        sf::RectangleShape enemy[100];
         enemyTexture.loadFromFile("enemy.png");
         for (int j = 0; j <= 99; j++)
         { 
-            enemy[j].setRadius(50.0f);
+            enemy[j].setSize(sf::Vector2f(80.0f, 80.0f));
             enemy[j].setTexture(&enemyTexture);
         }
        
@@ -223,8 +227,9 @@ int main()
         lblHP.setFont(ARLRDBD);
         lblHP.setString(ssHP.str());
 
-        const int groundHeight = 410;
+        const int groundHeight = 460;
         const float gravitySpeed = 10;
+        player.setPosition(sf::Vector2f(0, groundHeight));
         while (window.isOpen())
         {
 
@@ -256,7 +261,7 @@ int main()
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q) && indexUlti < 10 && ultivalue[indexUlti] == 0 && cdUltiValue == 1)
             {
 
-                ultimate[indexUlti].setPosition(player.getPosition().x + 50, player.getPosition().y - 20);
+                ultimate[indexUlti].setPosition(player.getPosition().x + 40, player.getPosition().y-80 );
                 ultivalue[indexUlti] = 1;
                 cdUltiValue = 0;
                 sUlti.play();
@@ -274,7 +279,7 @@ int main()
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E) && indexBullet < 10 && bulletvalue[indexBullet] == 0 && cdShoot.asSeconds() >= 0.2)
             {
                 clockShoot.restart();
-                bullet[indexBullet].setPosition(player.getPosition().x + 20, player.getPosition().y + 50);
+                bullet[indexBullet].setPosition(player.getPosition().x + 20, player.getPosition().y );
                 bulletvalue[indexBullet] = 1;
                 sAtk.play();
                 indexBullet++;
@@ -300,7 +305,7 @@ int main()
                 player.move({ +8.0f, 0.0f });
             }
 
-            if (player.getPosition().y < groundHeight && player.isJump() == false)
+            if (player.getPosition().y < groundHeight && player.isJump() == false )
             {
                 player.move({ 0 , gravitySpeed });
             }
@@ -317,47 +322,44 @@ int main()
             }
 
 
-            if (player.getPosition().y < groundHeight && player.isJump() == true)
-            {
-                player.move({ 0 , gravitySpeed });
-            }
+            
 
             //life move
-            if (player.getPosition().x + 400 > screenDimensions.x / 2)
+            if (player.getPosition().x + 300 > screenDimensions.x / 2)
             {
-                position.x = player.getPosition().x +800;
+                position.x = player.getPosition().x +695;
                 life1.setPosition(position.x, 10);
             }
 
-            if (player.getPosition().x + 400 > screenDimensions.x / 2)
+            if (player.getPosition().x + 300 > screenDimensions.x / 2)
             {
-                position.x = player.getPosition().x + 750;
+                position.x = player.getPosition().x + 645;
                 life2.setPosition(position.x, 10);
             }
 
-            if (player.getPosition().x + 400 > screenDimensions.x / 2)
+            if (player.getPosition().x + 300 > screenDimensions.x / 2)
             {
-                position.x = player.getPosition().x + 700;
+                position.x = player.getPosition().x + 595;
                 life3.setPosition(position.x, 10);
             }
 
             //Hp move
-            if (player.getPosition().x + 400 > screenDimensions.x / 2)
+            if (player.getPosition().x + 300 > screenDimensions.x / 2)
             {
-                position.x = player.getPosition().x -50;
+                position.x = player.getPosition().x -150;
                 lblHP.setPosition(position.x, 10);
             }
 
             //cdUlti move
-            if (player.getPosition().x + 400 > screenDimensions.x / 2)
+            if (player.getPosition().x + 300 > screenDimensions.x / 2)
             {
-                position.x = player.getPosition().x - 50;
+                position.x = player.getPosition().x - 150;
                 cdUltimate.setPosition(position.x, 600);
             }
             
-                if (player.getPosition().x + 400 > screenDimensions.x / 2)
+                if (player.getPosition().x + 300 > screenDimensions.x / 2)
                 {
-                    position.x = player.getPosition().x + 400;
+                    position.x = player.getPosition().x + 300;
 
                 }
                 else
@@ -391,24 +393,40 @@ int main()
             }
             for (int i = 0; i < 100; i++)
             {
-                enemy[i].setPosition(posx[i], groundHeight);
+                enemy[i].setPosition(posx[i], groundHeight-25);
             }
+            
 
 
             //Player
             std::cout << player.getPosition().x << " " << player.getPosition().y << "\n";
-            if (player.getPosition().x < 0)
+            if (player.getPosition().x < 40)
             {
-                player.setPosition(sf::Vector2f(0, player.getPosition().y));
+                player.setPosition(sf::Vector2f(40, player.getPosition().y));
             }
             if (player.getPosition().x > 16104 )
             {
                 player.setPosition(sf::Vector2f(16104, player.getPosition().y));
             }
-            /*if (Collision::PixelPerfectTest(player, )
-            {
+            //Collision
+            Collider playerCollision = player.GetCollider();
 
-            }*/
+            platform2.GetCollider().CheckCollision(playerCollision, 1.0f);
+            if (player.getPosition().x > 250 && player.getPosition().x < 750  &&  player.getPosition().y == 225)
+            {
+                if (player.isJump() == true)
+                {
+                    player.jump();
+                    if (player.getPosition().y > 235)
+                    {
+
+                        player.setPosition(sf::Vector2f(player.getPosition().x, 225));
+                        player.setJump(0);
+                    }
+                }
+
+            }
+            
 
             player.update();
 
@@ -433,6 +451,8 @@ int main()
             window.draw(life2);
             window.draw(life3);
             window.draw(lblHP);
+           
+            platform2.Draw(window);
            
          
             for (int i = 0; i < 10; i++)

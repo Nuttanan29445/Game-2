@@ -1,12 +1,19 @@
 #pragma once
 #include <iostream>
 #include <SFML\Graphics.hpp>
+#include "Collider.h"
 class Player
 {
 public:
+	Collider GetCollider()
+	{
+		return Collider(player);
+	}
+	
 	Player(sf::Vector2f size, sf::Texture *texture) {
 		this->player.setSize(size);
 		this->player.setTexture(texture);
+		this->player.setOrigin(player.getSize() / 2.0f);
 
 
 		//Initialized Funcitons
@@ -77,4 +84,6 @@ private:
 		float jumpForce;
 		float mass;
 		bool isJumping;
+
+		
 };
