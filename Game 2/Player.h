@@ -1,89 +1,38 @@
 #pragma once
-#include <iostream>
-#include <SFML\Graphics.hpp>
+#include<SFML/Graphics.hpp>
+#include "Animation.h"
 #include "Collider.h"
+#include <SFML/Audio.hpp>
+
 class Player
 {
 public:
-	Collider GetCollider()
-	{
-		return Collider(player);
-	}
-	
-	Player(sf::Vector2f size, sf::Texture *texture) {
-		this->player.setSize(size);
-		this->player.setTexture(texture);
-		this->player.setOrigin(player.getSize() / 2.0f);
+    Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight);
+    ~Player();
+
+    void Update(float deltatime);
+    void Draw(sf::RenderWindow& window);
+    void onCollision(sf::Vector2f direction);
+    void setPosition(float x, float y);
+
+    sf::FloatRect GetGlobalBounds() { return body.getGlobalBounds(); }
+    sf::Vector2f getPosition() { return body.getPosition(); }
+    Collider GetCollider() { return Collider(body); }
+    sf::RectangleShape body;
+    sf::SoundBuffer soundJump;
+    sf::Sound sJump;
+    
 
 
-		//Initialized Funcitons
-		this->initVariables();
-	}
-	void drawTo(sf::RenderWindow& window)
-	{
-		window.draw(this->player);
-	}
-	void move(sf::Vector2f distance)
-	{
-		this->player.move(distance);
-	}
-	void setPosition(sf::Vector2f newPos)
-	{
-		this->player.setPosition(newPos);
-	}
-	sf::Vector2f getPosition()
-	{
-		return this->player.getPosition();
-	}
-
-	void jump()
-	{
-		this->speedValue -= this->gravityAcceleration;
-		this->player.move(0, -speedValue);
-	}
-
-	void setJump(int buff)
-	{
-		int temp = buff;
-		if (temp == 1) {
-			this->isJumping = true;
-		}
-		else
-		{
-			this->isJumping = false;
-		}
-	}
-	bool isJump()
-	{
-		return this->isJumping;
-	}
-	void initVariables()
-	{
-		this->mass = 20.f;
-		this->isJumping = false;
-		this->speedValue = 0.f;
-		this->gravityAcceleration = 10.f;
-		this->jumpForce = 2000.f;
-	}
-	void setSpeedValue()
-	{
-		this->speedValue = this->jumpForce / this->mass;
-	}
-
-	void update()
-	{
-		//*std::cout << this->speedValue << std::endl;
-	}
 private:
-		sf::RectangleShape player;
-		sf::Texture playerTexture;
 
-		//Jump Mechanic
-		float speedValue;
-		float gravityAcceleration;
-		float jumpForce;
-		float mass;
-		bool isJumping;
+    Animation animation;
+    unsigned int row;
+    unsigned int stop;
+    float speed;
+    bool faceRight;
 
-		
+    sf::Vector2f velocity;
+    bool canJump;
+    float jumpHeight;
 };

@@ -1,14 +1,16 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "Player.h"
 #include <sstream>
 #include <SFML/Audio.hpp>
 #include "Menu.h"
 #include "Platform.h"
+#include "Player.h"
+#include <vector>
 int page_number;
 
 int main()
 {
+    
 
     sf::RenderWindow window(sf::VideoMode(910, 650), "SFML" , sf::Style::Close);
     Menu menu(window.getSize().x, window.getSize().y);
@@ -66,12 +68,88 @@ int main()
     if (page_number == 0)
 
     {
-        Platform platform1(nullptr, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(500.0f, 300.0f));
-        Platform platform2(nullptr, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(500.0f, 300.0f)); 
+        sf::RectangleShape platform1;
+        platform1.setSize(sf::Vector2f(400.0f, 50.0f));
+        sf::Texture platform1Texture;
+        platform1Texture.loadFromFile("platform.PNG");
+        platform1.setTexture(&platform1Texture);
+        platform1.setPosition(300.0f, 275.0f);
+        
+        sf::RectangleShape platform2;
+        platform2.setSize(sf::Vector2f(200.0f, 50.0f));
+        sf::Texture platform2Texture;
+        platform2Texture.loadFromFile("platform.PNG");
+        platform2.setTexture(&platform1Texture);
+        platform2.setPosition(1900.0f, 275.0f);
+
+        sf::RectangleShape platform3;
+        platform3.setSize(sf::Vector2f(300.0f, 50.0f));
+        sf::Texture platform3Texture;
+        platform3Texture.loadFromFile("platform.PNG");
+        platform3.setTexture(&platform1Texture);
+        platform3.setPosition(2800.0f, 175.0f);
+
+        sf::RectangleShape platform4;
+        platform4.setSize(sf::Vector2f(400.0f, 50.0f));
+        sf::Texture platform4Texture;
+        platform4Texture.loadFromFile("platform.PNG");
+        platform4.setTexture(&platform1Texture);
+        platform4.setPosition(4850.0f, 275.0f);
+
+
+        sf::RectangleShape platform5;
+        platform5.setSize(sf::Vector2f(200.0f, 50.0f));
+        sf::Texture platform5Texture;
+        platform3Texture.loadFromFile("platform.PNG");
+        platform5.setTexture(&platform1Texture);
+        platform5.setPosition(6750.0f, 275.0f);
+
+
+        sf::RectangleShape platform6;
+        platform6.setSize(sf::Vector2f(300.0f, 50.0f));
+        sf::Texture platform6Texture;
+        platform6Texture.loadFromFile("platform.PNG");
+        platform6.setTexture(&platform1Texture);       
+        platform6.setPosition(8500.0f, 275.0f);
+
+
+
+        std::vector<Platform> platforms;
+        std::vector<Platform> platforms1;
+
+        platforms.push_back(Platform(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(500.0f, 300.0f)));
+        platforms.push_back(Platform(&platform6Texture, sf::Vector2f(200.0f, 50.0f), sf::Vector2f(2000.0f, 300.0f)));
+        platforms.push_back(Platform(&platform6Texture, sf::Vector2f(300.0f, 50.0f), sf::Vector2f(2950.0f, 200.0f)));
+        platforms.push_back(Platform(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(5050.0f, 300.0f)));
+        platforms.push_back(Platform(&platform6Texture, sf::Vector2f(200.0f, 50.0f), sf::Vector2f(6850.0f, 300.0f)));
+        platforms.push_back(Platform(&platform6Texture, sf::Vector2f(300.0f, 50.0f), sf::Vector2f(8650.0f, 300.0f)));
+        platforms.push_back(Platform(&platform6Texture, sf::Vector2f(300.0f, 50.0f), sf::Vector2f(10050.0f, 300.0f)));
+        platforms.push_back(Platform(&platform6Texture, sf::Vector2f(300.0f, 50.0f), sf::Vector2f(12550.0f, 300.0f)));
+        platforms.push_back(Platform(&platform6Texture, sf::Vector2f(300.0f, 50.0f), sf::Vector2f(13850.0f, 300.0f)));
+        platforms.push_back(Platform(&platform6Texture, sf::Vector2f(300.0f, 50.0f), sf::Vector2f(15550.0f, 300.0f)));
+        platforms.push_back(Platform(&platform6Texture, sf::Vector2f(300.0f, 50.0f), sf::Vector2f(16650.0f, 300.0f)));
+        /*Platform platform1(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(500.0f, 300.0f));
+        Platform platform2(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(2000.0f, 300.0f));
+        Platform platform3(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(2950.0f, 300.0f));
+        Platform platform4(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(5050.0f, 300.0f));
+        Platform platform5(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(6850.0f, 300.0f));
+        Platform platform6(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(8650.0f, 300.0f));
+        Platform platform7(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(10050.0f, 300.0f));
+        Platform platform8(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(12550.0f, 300.0f));
+        Platform platform9(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(13850.0f, 300.0f));
+        Platform platform10(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(15650.0f, 300.0f));
+        Platform platform10(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(16650.0f, 300.0f));*/
+        
+        //ground&ceiling
+        platforms1.push_back(Platform(nullptr, sf::Vector2f(40000.0f, 100.0f), sf::Vector2f(500.0f, -80.0f)));
+        platforms1.push_back(Platform(nullptr, sf::Vector2f(40000.0f, 200.0f), sf::Vector2f(500.0f, 610.0f)));
+        
+   
 
         sf::Vector2i screenDimensions(910, 650);
         sf::RenderWindow window;
-        window.create(sf::VideoMode(screenDimensions.x, screenDimensions.y), "SFML works!");
+        window.create(sf::VideoMode(screenDimensions.x, screenDimensions.y), "SFML works!",sf::Style::Close);
+
 
      
 
@@ -161,22 +239,38 @@ int main()
 
         window.setFramerateLimit(60);
 
-        sf::Texture playerTexture;
+        /*sf::Texture playerTexture;
         playerTexture.loadFromFile("Megaman.png");
-        Player player(sf::Vector2f(100.0f, 100.0f), &playerTexture);
+        Player player(sf::Vector2f(100.0f, 100.0f), &playerTexture);*/
 
+        sf::Texture playerTexture;
+        playerTexture.loadFromFile("tux_from_linux.png");
+        Player player(&playerTexture, sf::Vector2u(3,9 ), 0.3f, 500.0f , 300.0f);
+        float deltaTime = 0.0f;
+        sf::Clock clock;
+
+        //enemy
+        float enemySpeed = 2;
         sf::Texture enemyTexture;
         sf::Clock cdEnemy;
         sf::RectangleShape enemy[100];
         enemyTexture.loadFromFile("enemy.png");
         for (int j = 0; j <= 99; j++)
         { 
+           
             enemy[j].setSize(sf::Vector2f(80.0f, 80.0f));
             enemy[j].setTexture(&enemyTexture);
         }
-       
+        int hpEnemy[10];
+        for (int i = 0; i <= 9; i++)
+            hpEnemy[i] = 2;
         int posx[10];
         for (int i = 0; i < 10; i++)
+        {
+            posx[i] = rand() % 15000;
+        }
+        for (int i = 0; i < 10; i++)
+        if (posx[i] < 3000)
         {
             posx[i] = rand() % 15000;
         }
@@ -190,6 +284,20 @@ int main()
                 }
             }
         }
+        for (int i = 0; i < 10; i++)
+        enemy[i].setPosition(posx[i], 435);
+        int bulletenemyvalue[10] = {};
+        sf::Clock clockShootEnemy;
+        sf::CircleShape bulletEnemy[10];
+        sf::Texture bulletEnemyTexture;
+        bulletEnemyTexture.loadFromFile("bullet.png");
+        for (int j = 0; j <= 9; j++)
+        {
+            bulletEnemy[j].setRadius(10.0f);
+            bulletEnemy[j].setTexture(&bulletTexture);
+            bulletEnemy[j].setPosition(posx[j], 435);
+        }
+       
         
         
             
@@ -227,12 +335,17 @@ int main()
         lblHP.setFont(ARLRDBD);
         lblHP.setString(ssHP.str());
 
-        const int groundHeight = 460;
-        const float gravitySpeed = 10;
-        player.setPosition(sf::Vector2f(0, groundHeight));
+        const int groundHeight = 40;
+        //const float gravitySpeed = 10;*/
         while (window.isOpen())
         {
+            int randomTime, r;
+            srand(time(NULL));
+            r = rand() % 2;
 
+            deltaTime = clock.restart().asSeconds();
+            /*if (deltaTime > 1.0f / 20.0f)
+                deltaTime = 1.0f / 20.0f;*/
 
             sf::Event evnt;
             while (window.pollEvent(evnt))
@@ -245,20 +358,21 @@ int main()
             sf::Time cdShoot = clockShoot.getElapsedTime();
             sf::Time cdUlti = clockUlti.getElapsedTime();
             sf::Time cdCdUltiValue = clockCdUltiValue.getElapsedTime();
+            sf::Time cdShootEnemy = clockShootEnemy.getElapsedTime();
             const float movespeed = 8;
 
             //JUMP
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && player.isJump() == false)
+            /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && player.isJump() == false)
             {
                 //player.move({ 0, -30.0f });
                 player.setSpeedValue();
                 player.setJump(1);
 
                 sJump.play();
-            }
+            }*/
 
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q) && indexUlti < 10 && ultivalue[indexUlti] == 0 && cdUltiValue == 1)
+          if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q) && indexUlti < 10 && ultivalue[indexUlti] == 0 && cdUltiValue == 1)
             {
 
                 ultimate[indexUlti].setPosition(player.getPosition().x + 40, player.getPosition().y-80 );
@@ -287,7 +401,7 @@ int main()
                     indexBullet = 0;
 
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+            /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
             {
                 player.move({ -8.0f, 0.0f });
             }
@@ -298,14 +412,14 @@ int main()
            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
             {
                 player.move(0.0f, +8.0f);
-            }
-            */
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+            }*/
+            
+            /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
             {
                 player.move({ +8.0f, 0.0f });
             }
 
-            if (player.getPosition().y < groundHeight && player.isJump() == false )
+            /*if (player.getPosition().y < groundHeight && player.isJump() == false )
             {
                 player.move({ 0 , gravitySpeed });
             }
@@ -319,7 +433,7 @@ int main()
                     player.setPosition(sf::Vector2f(player.getPosition().x, groundHeight));
                     player.setJump(0);
                 }
-            }
+            }*/
 
 
             
@@ -327,7 +441,7 @@ int main()
             //life move
             if (player.getPosition().x + 300 > screenDimensions.x / 2)
             {
-                position.x = player.getPosition().x +695;
+               position.x = player.getPosition().x +695;
                 life1.setPosition(position.x, 10);
             }
 
@@ -346,8 +460,8 @@ int main()
             //Hp move
             if (player.getPosition().x + 300 > screenDimensions.x / 2)
             {
-                position.x = player.getPosition().x -150;
-                lblHP.setPosition(position.x, 10);
+            position.x = player.getPosition().x - 150;
+            lblHP.setPosition(position.x, 10);
             }
 
             //cdUlti move
@@ -356,23 +470,22 @@ int main()
                 position.x = player.getPosition().x - 150;
                 cdUltimate.setPosition(position.x, 600);
             }
-            
-                if (player.getPosition().x + 300 > screenDimensions.x / 2)
-                {
-                    position.x = player.getPosition().x + 300;
 
-                }
-                else
-                {
-                    position.x = screenDimensions.x / 2;
-                }
-                if (position.x + 455 > 16208)
-                {
-                    position.x = 15753;
-                }
-            
-            view.setCenter(position);
+            if (player.getPosition().x + 300 > screenDimensions.x / 2)
+            {
+                position.x = player.getPosition().x + 300;
 
+            }
+            else
+            {
+                position.x = screenDimensions.x / 2;
+            }
+            if (position.x + 455 > 16208)
+            {
+                position.x = 15753;
+            }
+
+            //bullet&Ultimate
             for (int i = 0; i <= 9; i++)
             {
                 bullet[i].move(20.0f, 0.0f);
@@ -391,79 +504,268 @@ int main()
                     ultivalue[l] = 0;
                 }
             }
-            for (int i = 0; i < 100; i++)
-            {
-                enemy[i].setPosition(posx[i], groundHeight-25);
-            }
-            
+
 
 
             //Player
             std::cout << player.getPosition().x << " " << player.getPosition().y << "\n";
             if (player.getPosition().x < 40)
             {
-                player.setPosition(sf::Vector2f(40, player.getPosition().y));
+                player.setPosition(40, player.getPosition().y);
             }
-            if (player.getPosition().x > 16104 )
+            if (player.getPosition().x > 16104)
             {
-                player.setPosition(sf::Vector2f(16104, player.getPosition().y));
+                player.setPosition(16104, player.getPosition().y);
             }
+            player.Update(deltaTime);
+
+
             //Collision
             Collider playerCollision = player.GetCollider();
-
-            platform2.GetCollider().CheckCollision(playerCollision, 1.0f);
-            if (player.getPosition().x > 250 && player.getPosition().x < 750  &&  player.getPosition().y == 225)
+            sf::Vector2f direction;
+            for (Platform& platform : platforms)
             {
-                if (player.isJump() == true)
+                if (platform.GetCollider().CheckCollision(playerCollision, direction, 1.0f))
                 {
-                    player.jump();
-                    if (player.getPosition().y > 235)
-                    {
-
-                        player.setPosition(sf::Vector2f(player.getPosition().x, 225));
-                        player.setJump(0);
-                    }
+                    player.onCollision(direction);
                 }
 
             }
+            sf::Vector2f direction1;
+            for (Platform& platform : platforms1)
+            {
+                if (platform.GetCollider().CheckCollision(playerCollision, direction1, 1.0f))
+                {
+                    player.onCollision(direction1);
+                }
+
+            }
+            //enemy
+            
+            
+            /*for (int i = 0; i < 10; i++)
+            {
+                if (r == 0)
+                {
+                    enemy[i].move(-enemySpeed, 0.0f);
+                }
+                if (r == 1)
+                {
+                    enemy[i].move(enemySpeed, 0.0f);
+                }
+            }*/
+            for (int i = 0; i < 10; i++)
+            {
+                
+                if (enemy[0].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
+                {
+                    hpEnemy[0]--;
+                    bullet[i].setPosition(-50.0f, -50.0f);
+                    if (hpEnemy[0] == 0)
+                    {
+                        enemy[0].setPosition(-200.0f, -200.0f);
+                    }
+                    
+                }
+                if (enemy[1].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
+                {
+                    hpEnemy[1]--;
+                    bullet[i].setPosition(-50.0f, -50.0f);
+                    if (hpEnemy[1] == 0)
+                    {
+                        
+                        enemy[1].setPosition(-200.0f, -200.0f);
+                    }
+                }
+                if (enemy[2].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
+                {
+                    hpEnemy[2]--;
+                    bullet[i].setPosition(-50.0f, -50.0f);
+                    if (hpEnemy[2] == 0)
+                    {
+                        
+                        enemy[2].setPosition(-200.0f, -200.0f);
+                    }
+                }
+                if (enemy[3].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
+                {
+                    hpEnemy[3]--;
+
+                    bullet[i].setPosition(-50.0f, -50.0f);
+                    if (hpEnemy[3] == 0)
+                    {
+                        enemy[3].setPosition(-200.0f, -200.0f);
+                    }
+                }
+                if (enemy[4].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
+                {
+                    hpEnemy[4]--;
+                    bullet[i].setPosition(-50.0f, -50.0f);
+                    if (hpEnemy[4] == 0)
+                    {
+                        
+                        enemy[4].setPosition(-200.0f, -200.0f);
+                    }
+                }
+                if (enemy[5].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
+                {
+                    hpEnemy[5]--;
+                    bullet[i].setPosition(-50.0f, -50.0f);
+                    if (hpEnemy[5] == 0)
+                    {
+                        
+                        enemy[5].setPosition(-200.0f, -200.0f);
+                    }
+                }
+                if (enemy[6].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
+                {
+                    hpEnemy[6]--;
+                    bullet[i].setPosition(-50.0f, -50.0f);
+                    if (hpEnemy[6] == 0)
+                    {
+                        
+                        enemy[6].setPosition(-200.0f, -200.0f);
+                    }
+                }
+                if (enemy[7].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
+                {
+                    hpEnemy[7]--;
+                    bullet[i].setPosition(-50.0f, -50.0f);
+                    if (hpEnemy[7] == 0)
+                    {
+                       
+                        enemy[7].setPosition(-200.0f, -200.0f);
+                    }
+                }
+                if (enemy[8].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
+                {
+                    hpEnemy[8]--;
+                    bullet[i].setPosition(-50.0f, -50.0f);
+                    if (hpEnemy[8] == 0)
+                    {
+                        
+                        enemy[8].setPosition(-200.0f, -200.0f);
+                    }
+                   
+                }
+                if (enemy[9].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
+                {
+                    hpEnemy[9]--;
+                    bullet[i].setPosition(-50.0f, -50.0f);
+                    if (hpEnemy[9] == 0) 
+                    {
+                        
+                        enemy[9].setPosition(-200.0f, -200.0f);
+                    }
+                    
+                }
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                if (player.getPosition().x + 700 > enemy[i].getPosition().x )
+                {
+                    
+                    for (int j = 0; j <= 3; j++)
+                    {
+                            bulletEnemy[i].move(-5.0f, 0.0f);
+                    }
+                   
+                    
+                    
+                    
+                    /*
+                    clockShootEnemy.restart();
+                    for (int i = 0; i < 10; i++)
+                    bulletEnemy[i].move(-20.0f, 0.0f);*/
+                }
+                   
+                   
+            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    if (bulletenemyvalue[i] == 1 /*&& cdShootEnemy.asSeconds() >= 0.2*/)
+            //    {
+            //        /*clockShootEnemy.restart();*/
+            //        bulletEnemy[i].move(-20.0f, 0.0f);
+            //    }
+            //    bulletenemyvalue[i] == 0;
+            //}
+            
+           /* for (int i = 0; i < 10; i++)
+            if (bulletenemyvalue[i] == 1 && cdShootEnemy.asSeconds() >= 0.2)
+            {
+                clockShootEnemy.restart();
+                for (int i = 0; i <= 9; i++)
+                {
+                    bulletEnemy[i].move(-20.0f, 0.0f);
+                    
+                }
+                bulletenemyvalue[i] == 0;
+            }*/
+            
+           
             
 
-            player.update();
+
+            
+            view.setCenter(position);
+           
 
             window.clear();
-            menu.draw(window);
+            /*menu.draw(window);*/
+            
+            
             window.setView(view);
-            window.draw(bImage);
-            for (int k = 0; k <= 9; k++)
+            for (Platform& platform : platforms1)
             {
-                window.draw(ultimate[k]);
+                platform.Draw(window);
             }
-            for (int k = 0; k <= 9; k++)
-            {
-                window.draw(bullet[k]);
-            }
+            
+           
+           window.draw(bImage);
+            
+           
             if (cdUltiValue == 1)
             {
                 window.draw(cdUltimate);
             }
+           
+             
 
             window.draw(life1);
             window.draw(life2);
             window.draw(life3);
             window.draw(lblHP);
-           
-            platform2.Draw(window);
-           
-         
-            for (int i = 0; i < 10; i++)
+            for (Platform& platform : platforms)
             {
-                if (player.getPosition().x  > screenDimensions.x / 2 )
-                {
-                    window.draw(enemy[i]);
-                }
+                platform.Draw(window);
             }
+            
+            
+            player.Draw(window); 
+            for (int k = 0; k <= 9; k++)
+            {
+                window.draw(bullet[k]);
+            }
+            for (int k = 0; k <= 9; k++)
+            {
+                window.draw(bulletEnemy[k]);
+            }
+            for (int k = 0; k <= 9; k++)
+            {
+                window.draw(ultimate[k]);
+            } 
            
-            player.drawTo(window);
+            if (player.getPosition().x + 500 > screenDimensions.x / 2)
+            {
+                for (int k = 0; k <= 9; k++)
+                    window.draw(enemy[k]);
+
+            }
+            
+            
+            
+            //player.drawTo(window);
             window.setView(window.getDefaultView());
             window.display();
 

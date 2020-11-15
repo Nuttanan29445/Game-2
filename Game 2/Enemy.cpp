@@ -1,30 +1,51 @@
-#include "Enemy.h"
-
-
-void Enemy::initShape()
+#include "enemy.h"
+enemy::enemy()
 {
-	this->shape.setRadius(rand() % 20 + 20);
-	this->shape.setPointCount(rand() % 20 + 20);
+    rect.setSize(sf::Vector2f(90, 100));
+    rect.setPosition(200, 200);
+    rect.setFillColor(sf::Color::White);
+    sprite.setTextureRect(sf::IntRect(0, 5, 100, 100));
 }
-void Enemy::initVariables()
+void enemy::update()
 {
-	this->type = 0 ;
-	this->hp = 0;
-	this->hpMax = 10;
-	this->damage = 1;
-	this->points = 5;
-
-
+    sprite.setPosition(rect.getPosition().x, rect.getPosition().y);
 }
-Enemy::Enemy(float pos_x,float pos_y)
-{
-	
-	this->initShape();
-	this->initVariables();
-	this->shape.setPosition(pos_x, pos_y);
-}
-
-Enemy::~Enemy()
+void enemy::updateMovement()
 {
 
+
+    if (direction == 1)
+    {
+        rect.move(-movementspeed, 0);
+        //sprite.setTextureRect(sf::IntRect(movementspeed * 116, 116 * 1, 116, 116));
+
+    }
+    else if (direction == 2)
+    {
+        rect.move(movementspeed, 0);
+        //sprite.setTextureRect(sf::IntRect(movementspeed * 116, 116 * 2, 116, 116));
+
+    }
+    else if (direction == 3)
+    {
+        rect.move(0, -movementspeed);
+        //sprite.setTextureRect(sf::IntRect(movementspeed * 116, 116 * 3, 116, 116));
+
+    }
+    else if (direction == 4)
+    {
+        rect.move(0, movementspeed);
+        //sprite.setTextureRect(sf::IntRect(movementspeed * 116, 116 * 0, 116, 116));
+
+    }
+    else
+    {
+
+    }
+    counterWallking++;
+    if (counterWallking >= 50)
+    {
+        direction = generateRandom(15);
+        counterWallking = 0;
+    }
 }

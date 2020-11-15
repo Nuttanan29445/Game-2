@@ -1,24 +1,29 @@
 #pragma once
-#ifndef ENEMY_H
-#define ENEMY_H
 #include <SFML/Graphics.hpp>
-class Enemy
+#include <iostream>
+class enemy
 {
-private:
-	sf::CircleShape shape;
-	int type;
-	int hp;
-	int hpMax;
-	int damage;
-	int points;
-
-	void initShape();
-	void initVariables();
-
 public:
-	Enemy();
-	virtual ~Enemy();
+    sf::RectangleShape rect;
+    sf::Sprite sprite;
+    sf::Text text;
+    float movementspeed = 1;
+    int attackDamage = 2;
+    int counterWallking = 0;
+    int direction;
+    int hp = 100;
+    bool alive = true;
+    int generateRandom(int max)
+    {
+        int randomNumber = rand();
+        int random = (randomNumber % max) + 1;
+        int myRandom = random;
+        return myRandom;
+    }
+
+
+
+    enemy();
+    void update();
+    void updateMovement();
 };
-
-#endif //!ENEMY_H
-
