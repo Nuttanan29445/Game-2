@@ -9,19 +9,29 @@ Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, 
     row = 0;
     faceRight = true;
 
-    body.setSize(sf::Vector2f(60.0f, 70.0f));
+    body.setSize(sf::Vector2f(60, 60));
     body.setOrigin(body.getSize() / 2.0f);
     body.setPosition(0.f, 0.f);
+    body.setScale(1.0, 1.0);
     body.setTexture(texture);
     //Sound
     soundJump.loadFromFile("JumpSOUND.wav");
     sJump.setBuffer(soundJump);
     sJump.setVolume(15.0);
+    //Jump
+    
+    
+    
 }
 
 Player::~Player()
 {
 
+}
+
+bool Player::getFaceRight()
+{
+    return this->faceRight;
 }
 
 void Player::Update(float deltaTime)
@@ -39,22 +49,22 @@ void Player::Update(float deltaTime)
     {
         velocity.x += speed;
     }
-
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canJump)
     {
+
         sJump.play();
         velocity.y = -sqrt(2.0f * 981.0f * jumpHeight);
-        canJump = false;     
-    }
+        canJump = false;
 
+    }
     velocity.y += 981.0f * deltaTime;
 
 
-    if (velocity.x == 0.0f)
+    if (velocity.x == 0.0f )
     {
         row = 0;
     }
-    else
+    if (velocity.x != 0.0f)
     {
         row = 1;
         if (velocity.x > 0.0f)
@@ -62,11 +72,19 @@ void Player::Update(float deltaTime)
         else
             faceRight = false;
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        row = 2;
+    }
+    
+
+   
 
     animation.Update(row, deltaTime, faceRight);
     body.setTextureRect(animation.uvRect);
 
     body.move(velocity * deltaTime);
+    
 }
 
 void Player::Draw(sf::RenderWindow& window)

@@ -1,51 +1,163 @@
-#include "enemy.h"
-enemy::enemy()
+#include "Enemy.h"
+#include "Animation.h"
+#include "bulletEnemy.h"
+#include <iostream>
+Enemy::Enemy(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float speed, sf::Vector2f position) :
+    animation(texture, imageCount, switchTime)
 {
-    rect.setSize(sf::Vector2f(90, 100));
-    rect.setPosition(200, 200);
-    rect.setFillColor(sf::Color::White);
-    sprite.setTextureRect(sf::IntRect(0, 5, 100, 100));
+
+    this->initTexture();
+    this->speed = speed;
+    row = 0;
+    faceRight = true;
+
+    this->hp = 3;
+
+    body.setSize(sf::Vector2f(80, 80));
+    body.setOrigin(body.getSize() / 2.0f);
+    body.setScale(1.0, 1.0);
+    body.setTexture(texture);
+    body.setPosition(position);
+    //Sound
+    soundJump.loadFromFile("JumpSOUND.wav");
+    sJump.setBuffer(soundJump);
+    sJump.setVolume(15.0);
+    
+
+
+
 }
-void enemy::update()
+
+Enemy::~Enemy()
 {
-    sprite.setPosition(rect.getPosition().x, rect.getPosition().y);
+   /* for (auto* bullet : bullets)
+        delete bullet;*/
 }
-void enemy::updateMovement()
+
+void Enemy::setHP(int x)
 {
+    this->hp -= x;
+}
 
+int Enemy::getHP()
+{
+    return this->hp;
+}
+       
 
-    if (direction == 1)
+void Enemy::Update(float deltaTime, Player* player)
+{
+    int r = rand() % 3;
+    sf::Time cdShoot = clockShoot.getElapsedTime();
+
+    velocity.x *= 0.0f;
+    if (player->getPosition().x + 400 > body.getPosition().x)
     {
-        rect.move(-movementspeed, 0);
-        //sprite.setTextureRect(sf::IntRect(movementspeed * 116, 116 * 1, 116, 116));
+        if (r == 0)
+        {
+            velocity.x -= speed;
+
+        }
+        else if (r == 1)
+        {
+            velocity.x += speed;
+        }
+        else if (r == 2 && cdShoot.asSeconds() >= 0.2)
+        {
+            clockShoot.restart();
+            if (faceRight == false)
+                bullets.push_back(new bulletEnemy(&bulletTexture, 20.f, body.getPosition().x, body.getPosition().y, 1.0f, 0.0f));
+            if (faceRight == true)
+                bullets.push_back(new bulletEnemy(&bulletTexture, 20.f, body.getPosition().x, body.getPosition().y, -1.0f, 0.0f));
+            row = 1;
+        }
+    }
+    for (auto* bullet : bullets)
+    {
+        if (player->GetGlobalBounds().intersects(bullet->GetGlobalBounds()))
+        {
+            bullet->setPosition(-50.0f, -50.0f);
+        }
 
     }
-    else if (direction == 2)
+    
+    /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canJump)
     {
-        rect.move(movementspeed, 0);
-        //sprite.setTextureRect(sf::IntRect(movementspeed * 116, 116 * 2, 116, 116));
+        sJump.play();
+        velocity.y = -sqrt(2.0f * 981.0f * jumpHeight);
+        canJump = false;
 
-    }
-    else if (direction == 3)
-    {
-        rect.move(0, -movementspeed);
-        //sprite.setTextureRect(sf::IntRect(movementspeed * 116, 116 * 3, 116, 116));
+    }*/
 
-    }
-    else if (direction == 4)
-    {
-        rect.move(0, movementspeed);
-        //sprite.setTextureRect(sf::IntRect(movementspeed * 116, 116 * 0, 116, 116));
+   /* velocity.y += 981.0f * deltaTime;*/
 
-    }
-    else
-    {
 
-    }
-    counterWallking++;
-    if (counterWallking >= 50)
+    /*if (velocity.x == 0.0f)
     {
-        direction = generateRandom(15);
-        counterWallking = 0;
+        row = 0;
+    }*/
+    if (velocity.x != 0.0f)
+    {
+        row = 0;
+        if (velocity.x > 0.0f)
+            faceRight = false;
+        else
+            faceRight = true;
     }
+
+    animation.Update(row, deltaTime, faceRight);
+    body.setTextureRect(animation.uvRect);
+    this->updateBullet();
+
+    body.move(velocity * deltaTime);
+
+}
+
+void Enemy::Draw(sf::RenderWindow& window)
+{
+    window.draw(body);
+    this->DrawBullet(window);
+}
+
+void Enemy::DrawBullet(sf::RenderWindow& window)
+{
+    for (auto* bullet : bullets)
+        bullet->Render(window);
+}
+
+void Enemy::onCollision(sf::Vector2f direction)
+{
+    if (direction.x < 0.0f)
+    {
+        velocity.x = 0.0f;
+    }
+    else if (direction.x > 0.0f)
+    {
+        velocity.x = 0.0f;
+    }
+    if (direction.y < 0.0f)
+    {
+        velocity.y = 0.0f;
+        canJump = true;
+    }
+    else if (direction.y > 0.0f)
+    {
+        velocity.y = 0.0f;
+    }
+}
+
+void Enemy::setPosition(float x, float y)
+{
+    body.setPosition(x, y);
+}
+
+void Enemy::updateBullet()
+{
+    for (auto* bullet : bullets)
+        bullet->Update();
+}
+
+void Enemy::initTexture()
+{
+    this->bulletTexture.loadFromFile("bullet.png");
 }

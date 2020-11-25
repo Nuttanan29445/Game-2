@@ -10,6 +10,8 @@ public:
     Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float speed, float jumpHeight);
     ~Player();
 
+    bool getFaceRight();
+
     void Update(float deltatime);
     void Draw(sf::RenderWindow& window);
     void onCollision(sf::Vector2f direction);
@@ -22,6 +24,7 @@ public:
     sf::SoundBuffer soundJump;
     sf::Sound sJump;
     
+   
 
 
 private:

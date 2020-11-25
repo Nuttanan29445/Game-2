@@ -5,6 +5,9 @@
 #include "Menu.h"
 #include "Platform.h"
 #include "Player.h"
+#include "Enemy.h"
+#include "Enemyfly.h"
+#include "bulletEnemy.h"
 #include <vector>
 int page_number;
 
@@ -128,17 +131,7 @@ int main()
         platforms.push_back(Platform(&platform6Texture, sf::Vector2f(300.0f, 50.0f), sf::Vector2f(13850.0f, 300.0f)));
         platforms.push_back(Platform(&platform6Texture, sf::Vector2f(300.0f, 50.0f), sf::Vector2f(15550.0f, 300.0f)));
         platforms.push_back(Platform(&platform6Texture, sf::Vector2f(300.0f, 50.0f), sf::Vector2f(16650.0f, 300.0f)));
-        /*Platform platform1(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(500.0f, 300.0f));
-        Platform platform2(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(2000.0f, 300.0f));
-        Platform platform3(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(2950.0f, 300.0f));
-        Platform platform4(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(5050.0f, 300.0f));
-        Platform platform5(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(6850.0f, 300.0f));
-        Platform platform6(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(8650.0f, 300.0f));
-        Platform platform7(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(10050.0f, 300.0f));
-        Platform platform8(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(12550.0f, 300.0f));
-        Platform platform9(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(13850.0f, 300.0f));
-        Platform platform10(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(15650.0f, 300.0f));
-        Platform platform10(&platform6Texture, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(16650.0f, 300.0f));*/
+        
         
         //ground&ceiling
         platforms1.push_back(Platform(nullptr, sf::Vector2f(40000.0f, 100.0f), sf::Vector2f(500.0f, -80.0f)));
@@ -244,13 +237,76 @@ int main()
         Player player(sf::Vector2f(100.0f, 100.0f), &playerTexture);*/
 
         sf::Texture playerTexture;
-        playerTexture.loadFromFile("tux_from_linux.png");
-        Player player(&playerTexture, sf::Vector2u(3,9 ), 0.3f, 500.0f , 300.0f);
+        playerTexture.loadFromFile("playerrock.png");
+        Player player(&playerTexture, sf::Vector2u(3,3), 0.3f, 500.0f , 300.0f);
         float deltaTime = 0.0f;
         sf::Clock clock;
 
         //enemy
-        float enemySpeed = 2;
+        std::vector<Enemy*> enemy;
+        int posx[10];
+        for (int i = 0; i <= 14; i++)
+        {
+            if (posx[i] < 3000)
+            {
+                posx[i] = rand() % 15000;
+            }
+        }
+       
+        
+
+        sf::Texture enemyTexture;
+        enemyTexture.loadFromFile("Enemy-Sprite.png");
+        for (int i = 0; i <= 14; i++)
+        enemy.push_back(new Enemy(&enemyTexture, sf::Vector2u(3, 2),0.3f,100.0f, sf::Vector2f(posx[i], 480.0f)));
+         float dt = 0.0f;   
+         sf::Clock clock1;
+         //enemyfly
+         std::vector<Enemyfly*> enemyfly;
+         int posix[10];
+         for (int i = 0; i <= 14; i++)
+         {
+             if (posix[i] < 3000)
+             {
+                 posix[i] = rand() % 15000;
+             }
+         }
+        
+         
+       
+
+         sf::Texture enemyflyTexture;
+         enemyflyTexture.loadFromFile("enemy-spritefly.png");
+         for (int i = 0; i <= 14; i++)
+             enemyfly.push_back(new Enemyfly(&enemyflyTexture, sf::Vector2u(4, 1), 0.3f, 200.0f, sf::Vector2f(posix[i], 275.0f)));
+         float dti = 0.0f;
+         sf::Clock clock2;
+         
+         //bullet 
+         std::vector<bulletEnemy*> bulletPlayer;
+
+        
+
+        
+       
+        
+        //Jump
+        sf::Sprite jumpSprite;
+        sf::Texture jumpTexture;
+        sf::Vector2u jumpTexturesize = jumpTexture.getSize();
+        int jumpTextureCount = 0;
+        jumpTexture.loadFromFile("JUMPPlayer.png");
+
+        jumpTexturesize.x /= 4;
+        jumpTexturesize.y /= 1;
+        jumpSprite.setTexture(jumpTexture);
+        jumpSprite.setTextureRect(sf::IntRect(0, 0, jumpTexturesize.x, jumpTexturesize.y));
+        
+        
+       
+        
+       
+        /*float enemySpeed = 2;
         sf::Texture enemyTexture;
         sf::Clock cdEnemy;
         sf::RectangleShape enemy[100];
@@ -261,19 +317,14 @@ int main()
             enemy[j].setSize(sf::Vector2f(80.0f, 80.0f));
             enemy[j].setTexture(&enemyTexture);
         }
-        int hpEnemy[10];
-        for (int i = 0; i <= 9; i++)
-            hpEnemy[i] = 2;
-        int posx[10];
+        
+        
         for (int i = 0; i < 10; i++)
         {
             posx[i] = rand() % 15000;
         }
         for (int i = 0; i < 10; i++)
-        if (posx[i] < 3000)
-        {
-            posx[i] = rand() % 15000;
-        }
+        
         for (int i = 0; i < 10; i++)
         {
             for (int j = i + 1; j<10 ; j++)
@@ -287,7 +338,7 @@ int main()
         for (int i = 0; i < 10; i++)
         enemy[i].setPosition(posx[i], 435);
         int bulletenemyvalue[10] = {};
-        sf::Clock clockShootEnemy;
+        
         sf::CircleShape bulletEnemy[10];
         sf::Texture bulletEnemyTexture;
         bulletEnemyTexture.loadFromFile("bullet.png");
@@ -297,7 +348,8 @@ int main()
             bulletEnemy[j].setTexture(&bulletTexture);
             bulletEnemy[j].setPosition(posx[j], 435);
         }
-       
+       */
+
         
         
             
@@ -336,14 +388,18 @@ int main()
         lblHP.setString(ssHP.str());
 
         const int groundHeight = 40;
+        int  hpEnemy = 2;
         //const float gravitySpeed = 10;*/
         while (window.isOpen())
         {
+            
             int randomTime, r;
             srand(time(NULL));
             r = rand() % 2;
 
             deltaTime = clock.restart().asSeconds();
+            dt = clock1.restart().asSeconds();
+            dti = clock2.restart().asSeconds();
             /*if (deltaTime > 1.0f / 20.0f)
                 deltaTime = 1.0f / 20.0f;*/
 
@@ -352,24 +408,15 @@ int main()
             {
                 if (evnt.type == sf::Event::Closed)
                     window.close();
-            }
-            sf::Time cdEnemySpawn = cdEnemy.getElapsedTime();
+           }
+            //sf::Time cdEnemySpawn = cdEnemy.getElapsedTime();*/
 
             sf::Time cdShoot = clockShoot.getElapsedTime();
             sf::Time cdUlti = clockUlti.getElapsedTime();
             sf::Time cdCdUltiValue = clockCdUltiValue.getElapsedTime();
-            sf::Time cdShootEnemy = clockShootEnemy.getElapsedTime();
             const float movespeed = 8;
-
-            //JUMP
-            /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && player.isJump() == false)
-            {
-                //player.move({ 0, -30.0f });
-                player.setSpeedValue();
-                player.setJump(1);
-
-                sJump.play();
-            }*/
+            
+            
 
 
           if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q) && indexUlti < 10 && ultivalue[indexUlti] == 0 && cdUltiValue == 1)
@@ -390,51 +437,16 @@ int main()
                 cdUltiValue = 1;
             }
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E) && indexBullet < 10 && bulletvalue[indexBullet] == 0 && cdShoot.asSeconds() >= 0.2)
+    
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E) && cdShoot.asSeconds() >= 0.2)
             {
                 clockShoot.restart();
-                bullet[indexBullet].setPosition(player.getPosition().x + 20, player.getPosition().y );
-                bulletvalue[indexBullet] = 1;
                 sAtk.play();
-                indexBullet++;
-                if (indexBullet >= 10)
-                    indexBullet = 0;
-
+                if (player.getFaceRight() == true)
+                    bulletPlayer.push_back(new bulletEnemy(&bulletTexture, 20.f, player.getPosition().x, player.getPosition().y, 1.0f, 0.0f));
+                if (player.getFaceRight() == false)
+                    bulletPlayer.push_back(new bulletEnemy(&bulletTexture, 20.f, player.getPosition().x, player.getPosition().y, -1.0f, 0.0f));
             }
-            /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-            {
-                player.move({ -8.0f, 0.0f });
-            }
-            /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-            {
-                player.move(0.0f, -8.0f);
-            }
-           if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-            {
-                player.move(0.0f, +8.0f);
-            }*/
-            
-            /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-            {
-                player.move({ +8.0f, 0.0f });
-            }
-
-            /*if (player.getPosition().y < groundHeight && player.isJump() == false )
-            {
-                player.move({ 0 , gravitySpeed });
-            }
-
-            if (player.isJump() == true)
-            {
-                player.jump();
-                if (player.getPosition().y > groundHeight)
-                {
-                    
-                    player.setPosition(sf::Vector2f(player.getPosition().x, groundHeight));
-                    player.setJump(0);
-                }
-            }*/
-
 
             
 
@@ -508,7 +520,7 @@ int main()
 
 
             //Player
-            std::cout << player.getPosition().x << " " << player.getPosition().y << "\n";
+            // std::cout << player.getPosition().x << " " << player.getPosition().y << "\n";
             if (player.getPosition().x < 40)
             {
                 player.setPosition(40, player.getPosition().y);
@@ -518,6 +530,9 @@ int main()
                 player.setPosition(16104, player.getPosition().y);
             }
             player.Update(deltaTime);
+            
+            for (auto* bullet : bulletPlayer)
+                bullet->Update();
 
 
             //Collision
@@ -541,170 +556,117 @@ int main()
 
             }
             //enemy
-            
-            
-            /*for (int i = 0; i < 10; i++)
+            int counter = 0;
+            for (auto* i : enemy)
             {
-                if (r == 0)
+                for (auto* bullet : bulletPlayer)
                 {
-                    enemy[i].move(-enemySpeed, 0.0f);
-                }
-                if (r == 1)
-                {
-                    enemy[i].move(enemySpeed, 0.0f);
-                }
-            }*/
-            for (int i = 0; i < 10; i++)
-            {
-                
-                if (enemy[0].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
-                {
-                    hpEnemy[0]--;
-                    bullet[i].setPosition(-50.0f, -50.0f);
-                    if (hpEnemy[0] == 0)
+                    if (i->GetGlobalBounds().intersects(bullet->GetGlobalBounds()))
                     {
-                        enemy[0].setPosition(-200.0f, -200.0f);
-                    }
-                    
-                }
-                if (enemy[1].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
-                {
-                    hpEnemy[1]--;
-                    bullet[i].setPosition(-50.0f, -50.0f);
-                    if (hpEnemy[1] == 0)
-                    {
-                        
-                        enemy[1].setPosition(-200.0f, -200.0f);
-                    }
-                }
-                if (enemy[2].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
-                {
-                    hpEnemy[2]--;
-                    bullet[i].setPosition(-50.0f, -50.0f);
-                    if (hpEnemy[2] == 0)
-                    {
-                        
-                        enemy[2].setPosition(-200.0f, -200.0f);
-                    }
-                }
-                if (enemy[3].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
-                {
-                    hpEnemy[3]--;
+                        i->setHP(1);
 
-                    bullet[i].setPosition(-50.0f, -50.0f);
-                    if (hpEnemy[3] == 0)
-                    {
-                        enemy[3].setPosition(-200.0f, -200.0f);
+                        bullet->setPosition(-50.0f, -50.0f);
+                        if (i->getHP() <= 0)
+                        {
+                            delete enemy.at(counter);
+                            enemy.erase(enemy.begin() + counter);
+                            counter--;
+                        }
+                        std::cout << enemy.size() << std::endl;
+
                     }
                 }
-                if (enemy[4].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
-                {
-                    hpEnemy[4]--;
-                    bullet[i].setPosition(-50.0f, -50.0f);
-                    if (hpEnemy[4] == 0)
-                    {
-                        
-                        enemy[4].setPosition(-200.0f, -200.0f);
-                    }
-                }
-                if (enemy[5].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
-                {
-                    hpEnemy[5]--;
-                    bullet[i].setPosition(-50.0f, -50.0f);
-                    if (hpEnemy[5] == 0)
-                    {
-                        
-                        enemy[5].setPosition(-200.0f, -200.0f);
-                    }
-                }
-                if (enemy[6].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
-                {
-                    hpEnemy[6]--;
-                    bullet[i].setPosition(-50.0f, -50.0f);
-                    if (hpEnemy[6] == 0)
-                    {
-                        
-                        enemy[6].setPosition(-200.0f, -200.0f);
-                    }
-                }
-                if (enemy[7].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
-                {
-                    hpEnemy[7]--;
-                    bullet[i].setPosition(-50.0f, -50.0f);
-                    if (hpEnemy[7] == 0)
-                    {
-                       
-                        enemy[7].setPosition(-200.0f, -200.0f);
-                    }
-                }
-                if (enemy[8].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
-                {
-                    hpEnemy[8]--;
-                    bullet[i].setPosition(-50.0f, -50.0f);
-                    if (hpEnemy[8] == 0)
-                    {
-                        
-                        enemy[8].setPosition(-200.0f, -200.0f);
-                    }
-                   
-                }
-                if (enemy[9].getGlobalBounds().intersects(bullet[i].getGlobalBounds()))
-                {
-                    hpEnemy[9]--;
-                    bullet[i].setPosition(-50.0f, -50.0f);
-                    if (hpEnemy[9] == 0) 
-                    {
-                        
-                        enemy[9].setPosition(-200.0f, -200.0f);
-                    }
-                    
-                }
+                counter++;
             }
-            for (int i = 0; i < 10; i++)
-            {
-                if (player.getPosition().x + 700 > enemy[i].getPosition().x )
-                {
-                    
-                    for (int j = 0; j <= 3; j++)
-                    {
-                            bulletEnemy[i].move(-5.0f, 0.0f);
-                    }
-                   
-                    
-                    
-                    
-                    /*
-                    clockShootEnemy.restart();
-                    for (int i = 0; i < 10; i++)
-                    bulletEnemy[i].move(-20.0f, 0.0f);*/
-                }
-                   
-                   
-            }
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    if (bulletenemyvalue[i] == 1 /*&& cdShootEnemy.asSeconds() >= 0.2*/)
-            //    {
-            //        /*clockShootEnemy.restart();*/
-            //        bulletEnemy[i].move(-20.0f, 0.0f);
-            //    }
-            //    bulletenemyvalue[i] == 0;
-            //}
-            
-           /* for (int i = 0; i < 10; i++)
-            if (bulletenemyvalue[i] == 1 && cdShootEnemy.asSeconds() >= 0.2)
-            {
-                clockShootEnemy.restart();
-                for (int i = 0; i <= 9; i++)
-                {
-                    bulletEnemy[i].move(-20.0f, 0.0f);
-                    
-                }
-                bulletenemyvalue[i] == 0;
-            }*/
+
             
            
+            for (auto* i : enemy)
+                i->Update(dt, &player);
+           //enemyfly
+         
+            for (auto* k : enemyfly)
+            {
+                for (int j = 0; j <= 9; j++)
+                {
+                    if (k->GetGlobalBounds().intersects(bullet[j].getGlobalBounds()))
+                    {
+
+
+                        bullet[j].setPosition(-50.0f, -50.0f);
+
+                        k->setPosition(-200.0f, -200.0f);
+
+
+                    }
+
+                }
+                if (k->getPosition().y < 100)
+                {
+                    /*for (int j = 0; j <= 9; j++)*/
+                        k->setPosition(k->getPosition().x, 100);
+                        
+                }
+                if (k->getPosition().y > 375)
+                {
+                    /*for (int j = 0; j <= 9; j++)*/
+                        k->setPosition(k->getPosition().x, 375);
+                }
+            }
             
+            for (auto* k : enemyfly)
+                k->Update(dti);
+
+            
+           // for (int i = 0; i < 10; i++)
+           // {
+           //     if (player.getPosition().x + 700 > enemy[i].getPosition().x )
+           //     {
+           //         
+           //         for (int j = 0; j <= 3; j++)
+           //         {
+           //                 bulletEnemy[i].move(-5.0f, 0.0f);
+           //         }
+           //        
+           //         
+           //         
+           //         
+           //         /*
+           //         clockShootEnemy.restart();
+           //         for (int i = 0; i < 10; i++)
+           //         bulletEnemy[i].move(-20.0f, 0.0f);*/
+           //     }
+           //        
+           //        
+           // }
+           // //for (int i = 0; i < 10; i++)
+           // //{
+           // //    if (bulletenemyvalue[i] == 1 /*&& cdShootEnemy.asSeconds() >= 0.2*/)
+           // //    {
+           // //        /*clockShootEnemy.restart();*/
+           // //        bulletEnemy[i].move(-20.0f, 0.0f);
+           // //    }
+           // //    bulletenemyvalue[i] == 0;
+           // //}
+           // 
+           ///* for (int i = 0; i < 10; i++)
+           // if (bulletenemyvalue[i] == 1 && cdShootEnemy.asSeconds() >= 0.2)
+           // {
+           //     clockShootEnemy.restart();
+           //     for (int i = 0; i <= 9; i++)
+           //     {
+           //         bulletEnemy[i].move(-20.0f, 0.0f);
+           //         
+           //     }
+           //     bulletenemyvalue[i] == 0;
+           // }*/
+           // 
+            //jump
+            jumpSprite.setPosition(player.getPosition().x, player.getPosition().y);
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            {
+                jumpSprite.setTextureRect(sf::IntRect(jumpTextureCount * jumpTexturesize.x, jumpTexturesize.y * 0, jumpTexturesize.x, jumpTexturesize.y));
+            }
 
 
             
@@ -714,14 +676,14 @@ int main()
             window.clear();
             /*menu.draw(window);*/
             
-            
             window.setView(view);
+            
+            
+            
             for (Platform& platform : platforms1)
             {
                 platform.Draw(window);
             }
-            
-           
            window.draw(bImage);
             
            
@@ -731,38 +693,48 @@ int main()
             }
            
              
-
-            window.draw(life1);
-            window.draw(life2);
-            window.draw(life3);
-            window.draw(lblHP);
             for (Platform& platform : platforms)
             {
                 platform.Draw(window);
             }
+            window.draw(life1);
+            window.draw(life2);
+            window.draw(life3);
+            window.draw(lblHP);
+            
             
             
             player.Draw(window); 
-            for (int k = 0; k <= 9; k++)
+            /*for (int k = 0; k <= 9; k++)
             {
                 window.draw(bullet[k]);
-            }
-            for (int k = 0; k <= 9; k++)
+            }*/
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            window.draw(jumpSprite);
+           /* for (int k = 0; k <= 9; k++)
             {
                 window.draw(bulletEnemy[k]);
-            }
+            }*/
+            for (auto* bullet : bulletPlayer)
+                bullet->Render(window);
             for (int k = 0; k <= 9; k++)
             {
                 window.draw(ultimate[k]);
             } 
            
-            if (player.getPosition().x + 500 > screenDimensions.x / 2)
+            /*if (player.getPosition().x + 500 > screenDimensions.x / 2)
             {
                 for (int k = 0; k <= 9; k++)
                     window.draw(enemy[k]);
 
-            }
+            }*/
+            for (auto* i : enemy)
+                i->Draw(window);
+            for (auto* k : enemyfly) 
+                k->Draw(window);
+
             
+           
             
             
             //player.drawTo(window);
@@ -774,4 +746,4 @@ int main()
 
 
     return 0;
-}
+ }
