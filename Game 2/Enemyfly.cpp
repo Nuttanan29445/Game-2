@@ -5,8 +5,8 @@ Enemyfly::Enemyfly(sf::Texture* texture, sf::Vector2u imageCount, float switchTi
     animation(texture, imageCount, switchTime)
 {
     this->speed = speed;
-    row = 0;
-    faceRight = true;
+    this -> row = 0;
+    this->faceRight = true;
 
     body.setSize(sf::Vector2f(60, 60));
     body.setOrigin(body.getSize() / 2.0f);
@@ -25,7 +25,7 @@ Enemyfly::Enemyfly(sf::Texture* texture, sf::Vector2u imageCount, float switchTi
 
 Enemyfly::~Enemyfly()
 {
-
+    
 }
 
 void Enemyfly::Update(float deltaTime)
@@ -46,21 +46,7 @@ void Enemyfly::Update(float deltaTime)
         velocity.y += speed;
     }
     
-    /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canJump)
-    {
-        sJump.play();
-        velocity.y = -sqrt(2.0f * 981.0f * jumpHeight);
-        canJump = false;
-
-    }*/
-
-    /* velocity.y += 981.0f * deltaTime;*/
-
-
-     /*if (velocity.x == 0.0f)
-     {
-         row = 0;
-     }*/
+  
     
     if (velocity.y != 0.0f)
     {
@@ -85,14 +71,6 @@ void Enemyfly::Update(float deltaTime)
      body.move(velocity * deltaTime);
     
 }
-
-void Enemyfly::Draw(sf::RenderWindow& window)
-{
-    window.draw(body);
-}
-
-
-
 void Enemyfly::onCollision(sf::Vector2f direction)
 {
     if (direction.x < 0.0f)
@@ -106,12 +84,17 @@ void Enemyfly::onCollision(sf::Vector2f direction)
     if (direction.y < 0.0f)
     {
         velocity.y = 0.0f;
-        canJump = true;
+        
     }
     else if (direction.y > 0.0f)
     {
         velocity.y = 0.0f;
     }
+}
+
+void Enemyfly::Draw(sf::RenderWindow& window)
+{
+    window.draw(body);
 }
 
 void Enemyfly::setPosition(float x, float y)

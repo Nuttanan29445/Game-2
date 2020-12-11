@@ -2,16 +2,22 @@
 #include <iostream>
 #include "Animation.h"
 #include "Enemy.h"
-bulletEnemy::bulletEnemy(sf::Texture* texture, float speed, float posx, float posy, float dirx, float diry)
+#include <vector>
+bulletEnemy::bulletEnemy(sf::Texture* texture, float speed, float posx, float posy, float dirx, float diry, sf::Vector2f scale)
 {
+    this->scale = scale;
     this->speed = speed;
     body.setSize(sf::Vector2f(20, 20));
     body.setOrigin(body.getSize() / 2.0f);
-    body.setScale(1.0, 1.0);
+    body.setScale(scale);
     body.setTexture(texture);
     body.setPosition(posx, posy);
     this->direction.x = dirx;
     this->direction.y = diry;
+}
+bulletEnemy::~bulletEnemy()
+{
+
 }
 
 void bulletEnemy::Update()
@@ -27,3 +33,5 @@ void bulletEnemy::setPosition(float x, float y)
 {
     body.setPosition(x, y);
 }
+
+

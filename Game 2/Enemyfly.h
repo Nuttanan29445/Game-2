@@ -11,10 +11,9 @@ public:
 
     void Update(float deltatime);
     void Draw(sf::RenderWindow& window);
-    void move();
-    void onCollision(sf::Vector2f direction);
     void setPosition(float x, float y);
     void getPosition(float x, float y);
+    void onCollision(sf::Vector2f direction);
     sf::FloatRect GetGlobalBounds() { return body.getGlobalBounds(); }
     sf::Vector2f getPosition() { return body.getPosition(); }
     Collider GetCollider() { return Collider(body); }
@@ -29,11 +28,9 @@ private:
 
     Animation animation;
     unsigned int row;
-    unsigned int stop;
     float speed;
     bool faceRight;
 
     sf::Vector2f velocity;
-    bool canJump;
-    float jumpHeight;
+   
 };

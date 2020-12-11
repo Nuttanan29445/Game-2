@@ -6,8 +6,13 @@ Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, 
 {
     this->speed = speed;
     this->jumpHeight = jumpHeight;
-    row = 0;
-    faceRight = true;
+    this->canJump = false;
+    this->row = 0;
+    this->faceRight = true;
+    this->HP = 100;
+    
+   
+    
 
     body.setSize(sf::Vector2f(60, 60));
     body.setOrigin(body.getSize() / 2.0f);
@@ -34,9 +39,30 @@ bool Player::getFaceRight()
     return this->faceRight;
 }
 
+void Player::decreaseHP(int x)
+{
+    this->HP -= x;
+    if (x >= 0)
+    {
+        body.setFillColor(sf::Color(255, 0, 0, 100));
+    }
+   
+    if (x < 0)
+    {
+
+        body.setFillColor(sf::Color(0, 255, 0, 100));
+    }
+    this->damageClock.restart();
+}
+
+void Player::setHP(int x)
+{
+    this->HP = x;
+}
+
 void Player::Update(float deltaTime)
 {
-    
+    std::cout << body.getPosition().x << " " << body.getPosition().y << "\n";
 
     velocity.x *= 0.0f;
 
@@ -71,6 +97,11 @@ void Player::Update(float deltaTime)
             faceRight = true;
         else
             faceRight = false;
+    }
+    if(this->damageClock.getElapsedTime().asSeconds() >= 0.2f )
+    {
+        body.setFillColor(sf::Color(255, 255, 255, 255));
+       
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
     {
@@ -116,4 +147,9 @@ void Player::onCollision(sf::Vector2f direction)
 void Player::setPosition(float x, float y)
 {
     body.setPosition(x, y);
+}
+
+int Player::getHP()
+{
+    return this-> HP;
 }
